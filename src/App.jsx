@@ -1,8 +1,8 @@
 
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Table } from 'react-bootstrap';
 import './App.css';
-import { sendData } from "./Logic";
-import { useState } from 'react';
+import { sendData, getData } from "./Logic";
+import { useState, useEffect } from 'react';
 function App() {
 
   const [values, setValues] = useState({
@@ -12,7 +12,10 @@ function App() {
     edition: ""
   });
 
-  let currentDate = Date();
+
+  const [books, setBooks] = useState([]);
+
+  // let currentDate = Date();
 
   const changeValue = (field) => {
 
@@ -36,21 +39,64 @@ function App() {
   }
 
 
+  useEffect(() => {
+
+    console.log("Cambio de estado variable values", 2 + 2)
+
+    getData(setBooks)
+  }, [values]);
 
 
   return (
 
     <div id="form-container" style={{ backgroundColor: "rgb(232, 232, 233)" }}>
 
+      <h3>LIBROS REGISTRADOS</h3>
+
+      <br />
+
+      <Table striped bordered hover size="sm">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Autor</th>
+            <th>ISBN</th>
+            <th>Edición</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          {
+            books.map(element => {
+              // console.log("resultado", element);
+              return (
+                <>
+                  <tr>
+                    <td>{element.id}</td>
+                    <td>{element.name}</td>
+                    <td>{element.author}</td>
+                    <td>{element.isbn}</td>
+                    <td>{element.edition}</td>
+                  </tr>
+                </>)
+            })
+          }
+
+        </tbody>
+      </Table>
+      <br />
+
+
       <h3>DATOS A ENVIAR</h3>
       <p>
         Nombre: {values.name}
       </p>
       <p>
-       Autor:  {values.author}
+        Autor:  {values.author}
       </p>
       <p>
-       ISBN: {values.isbn}
+        ISBN: {values.isbn}
       </p>
       <p>
         Edición: {values.edition}
@@ -98,11 +144,14 @@ function App() {
         </Form.Group>
 
         <div className='d-grid gap-3'>
-          <Button variant='primary' onClick={()=>sendData(values)} > Enviar </Button>
-          <Button variant='primary' > Consultar </Button>
+          <Button variant='primary' onClick={() => { sendData(values); getData(setBooks); }} > Enviar </Button>
+          {/* <Button variant='primary' onClick={() => getData(setBooks)}> Consultar </Button> */}
         </div>
 
       </Form>
+
+      <br />
+
 
     </div>
 
