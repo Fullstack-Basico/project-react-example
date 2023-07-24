@@ -18,8 +18,6 @@ function sendData(data) {
         console.log(response);
         console.log(response.json());
 
-
-
         if (response.status === 201) {
             alert("Creación Exitosa Libro !!");
         } else {

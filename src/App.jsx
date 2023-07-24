@@ -3,6 +3,8 @@ import { Form, Button, Table } from 'react-bootstrap';
 import './App.css';
 import { sendData, getData } from "./Logic";
 import { useState, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
 function App() {
 
   const [values, setValues] = useState({
@@ -33,7 +35,7 @@ function App() {
       [field.target.name]: field.target.value,
     }
 
-    console.log("Valor variable data", data);
+    // console.log("Valor variable data", data);
 
     setValues(data);
   }
@@ -41,7 +43,7 @@ function App() {
 
   useEffect(() => {
 
-    console.log("Cambio de estado variable values", 2 + 2)
+    // console.log("Cambio de estado variable values")
 
     getData(setBooks)
   }, [values]);
@@ -71,15 +73,14 @@ function App() {
             books.map(element => {
               // console.log("resultado", element);
               return (
-                <>
-                  <tr>
-                    <td>{element.id}</td>
-                    <td>{element.name}</td>
-                    <td>{element.author}</td>
-                    <td>{element.isbn}</td>
-                    <td>{element.edition}</td>
+                  <tr key={uuidv4()}>
+                    <td key={uuidv4()}>{element.id}</td>
+                    <td key={uuidv4()}>{element.name}</td>
+                    <td key={uuidv4()}>{element.author}</td>
+                    <td key={uuidv4()}>{element.isbn}</td>
+                    <td key={uuidv4()}>{element.edition}</td>
                   </tr>
-                </>)
+               )
             })
           }
 
@@ -145,7 +146,7 @@ function App() {
 
         <div className='d-grid gap-3'>
           <Button variant='primary' onClick={() => { sendData(values); getData(setBooks); }} > Enviar </Button>
-          {/* <Button variant='primary' onClick={() => getData(setBooks)}> Consultar </Button> */}
+          <Button variant='primary' onClick={() => getData(setBooks)}> Consultar </Button>
         </div>
 
       </Form>
