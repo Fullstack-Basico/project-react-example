@@ -5,6 +5,8 @@ import { sendData, getData } from "./Logic";
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
+import image from "./image/fractal.jpg";
+
 function App() {
 
   const [values, setValues] = useState({
@@ -52,6 +54,8 @@ function App() {
   return (
 
     <div id="form-container" style={{ backgroundColor: "rgb(232, 232, 233)" }}>
+
+      <img src={image} alt="Banner" width={950} height={100}/>
 
       <h3>LIBROS REGISTRADOS</h3>
 
